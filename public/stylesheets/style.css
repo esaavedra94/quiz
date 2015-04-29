@@ -38,3 +38,8 @@ nav span {
 a {
   color: #00B7FF;
 }
+
+img.foto {
+  width: 80%;
+  margin: auto;
+}

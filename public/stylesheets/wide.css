@@ -26,3 +26,8 @@ footer {
   clear: both;
   display: block;
 }
+
+img.foto {
+  height: 130px;
+  width: auto;
+}
