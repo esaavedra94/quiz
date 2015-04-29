@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta chatset="utf-8">
+    <title>Quiz Edav</title>
+    <link rel="shortcut icon" href="https://cdn3.iconfinder.com/data/icons/brain-games/128/Puzzle.png" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h2>Quiz Edav</h2>
+
+    <form method="get" action="/quizes/answer">
+      Pregunta: <%= pregunta %> <p>
+        <input type="text" name="respuesta" value="Responda aquí"/>
+        <input type="submit" value="Enviar"/>
+    </form>
+  </body>
+</html>
