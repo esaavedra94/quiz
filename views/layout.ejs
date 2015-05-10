@@ -18,6 +18,11 @@
     <div id="page-wrap">
       <header class="main" id="h1">
         <h2>Quiz: el juego de las preguntas</h2>
+          <form method="get" action="/quizes">
+            <input type="text" id="search" name="search" placeholder="Buscar una pregunta" />
+            <input type="hidden" id="hide" name="hide" value="1">
+            <input type="submit" alt="Buscar" value="Buscar" />
+          </form>
       </header>
 
       <nav class="main" id="n1" role="navigation">
