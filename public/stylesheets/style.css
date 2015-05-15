@@ -45,6 +45,11 @@ img.foto {
 }
 
 table {
-	margin: auto; 
+	margin: auto;
 	text-align: center;
+}
+
+#ErrorMsgs {
+  color:red;
+  font-size:smaller;
 }
