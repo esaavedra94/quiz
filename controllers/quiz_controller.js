@@ -2,8 +2,14 @@ var models = require('../models/models.js');
 
 // Autoload :id
 exports.load = function(req, res, next, quizId) {
-  models.Quiz.find(quizId).then(
-    function(quiz) {
+  models.Quiz.find({
+            where: {
+                id: Number(quizId)
+            },
+            include: [{
+                model: models.Comment
+            }]
+        }).then(function(quiz) {
       if (quiz) {
         req.quiz = quiz;
         next();
@@ -14,21 +20,21 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-  if (req.query.hide==="1") {
-    models.Quiz.findAll({where: ["pregunta like ?", req.query.search]}).then(function(quizes) {
-      res.render('quizes/index.ejs', { quizes: quizes, errors: []});
-    }).catch(function(error) { next(error);})
-  }
-  else {
+  if (req.query.search===undefined) {
     models.Quiz.findAll().then(
       function(quizes) {
         res.render('quizes/index.ejs', {quizes: quizes, errors: []});
       }
     ).catch(function(error){next(error)});
   }
+  else {
+    models.Quiz.findAll({where:["pregunta like ?", "%"+req.query.search.replace(/\s/g,"%")+"%"], order: 'pregunta ASC'}).then(function(quizes) {
+      res.render('quizes/index.ejs', { quizes: quizes, errors: []});
+    }).catch(function(error) { next(error);})
+  }
 };
 
-// GET /quizes/question
+// GET /quizes/:id
 exports.show = function(req, res) {
   res.render('quizes/show', { quiz: req.quiz, errors: [] });
 }; //req.quiz: instancia de quiz cargada con autoload
