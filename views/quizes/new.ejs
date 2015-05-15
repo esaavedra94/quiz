@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta chatset="utf-8">
     <title>Quiz Edav</title>
     <link rel="shortcut icon" href="https://cdn3.iconfinder.com/data/icons/brain-games/128/Puzzle.png" />
     <link rel='stylesheet' type='text/css' href='/stylesheets/style.css' />
@@ -10,11 +10,9 @@
   </head>
   <body>
     <h2>Quiz Edav</h2>
-    <table>
-      <% var i; for (i=0; i<quizes.length; i++) { %>
-        <tr><td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr>
-        <% } %>
-    </table>
-    <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+    Añadir pregunta: <p>
+    <form method="post" action="/quizes/create" >
+      <% include _form.ejs %>
+    </form>
   </body>
 </html>
