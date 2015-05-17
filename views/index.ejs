@@ -4,7 +4,11 @@
     <title><%= title %></title>
   </head>
   <body>
-    <h1>Bienvenido a <%= title %></h1>
+    <% if (session.user) { %>
+      <h1>Bienvenido a <%= title %>, <%= session.user.username %> </h1>
+    <% } else { %>
+    <h1>Bienvenido a <%= title %> </h1>
+    <% } %>
     <p>El portal donde podrá crear sus propios juegos</p>
   </body>
 </html>
