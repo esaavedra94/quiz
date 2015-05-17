@@ -2,14 +2,14 @@ var models = require('../models/models.js');
 
 // Autoload :id
 exports.load = function(req, res, next, quizId) {
-  models.Quiz.find({
+  models.Quiz.find(/*{
             where: {
                 id: Number(quizId)
             },
             include: [{
                 model: models.Comment
             }]
-        }).then(function(quiz) {
+        }*/quizId).then(function(quiz) {
       if (quiz) {
         req.quiz = quiz;
         next();
@@ -36,8 +36,8 @@ exports.index = function(req, res) {
 
 // GET /quizes/:id
 exports.show = function(req, res) {
-  res.render('quizes/show', { quiz: req.quiz, errors: [] });
-}; //req.quiz: instancia de quiz cargada con autoload
+  res.render('quizes/show', { quiz: req.quiz, errors: []});
+};            // req.quiz: instancia de quiz cargada con autoload
 
 // GET /quizes/:id/answer
 exports.answer = function(req, res) {
@@ -56,7 +56,7 @@ exports.answer = function(req, res) {
 
 // GET /quizes/new
 exports.new = function(req, res) {
-  var quiz = models.Quiz.build( //crea objeto de quiz
+  var quiz = models.Quiz.build( // crea objeto quiz
     {pregunta: "Pregunta", respuesta: "Respuesta"}
   );
 
@@ -66,19 +66,19 @@ exports.new = function(req, res) {
 // POST /quizes/create
 exports.create = function(req, res) {
   var quiz = models.Quiz.build( req.body.quiz );
-    quiz
-    .validate()
-    .then(
-      function(err){
-        if (err) {
-          res.render('quizes/new', {quiz: quiz, errors: err.errors});
-        } else {
-          quiz // save: guarda en DB campos pregunta y respuesta de quiz
-          .save({fields: ["pregunta", "respuesta"]})
-          .then( function(){ res.redirect('/quizes')})
-        }      // res.redirect: Redirección HTTP a lista de preguntas
-      }
-    );
+  quiz
+  .validate()
+  .then(
+    function(err){
+      if (err) {
+        res.render('quizes/new', {quiz: quiz, errors: err.errors});
+      } else {
+        quiz // save: guarda en DB campos pregunta y respuesta de quiz
+        .save({fields: ["pregunta", "respuesta"]})
+        .then( function(){ res.redirect('/quizes')})
+      }      // res.redirect: Redirección HTTP a lista de preguntas
+    }
+  ).catch(function(error){next(error)});
 };
 
 // GET /quizes/:id/edit
@@ -104,5 +104,5 @@ exports.update = function(req, res) {
         .then( function(){ res.redirect('/quizes');});
       }     // Redirección HTTP a lista de preguntas (URL relativo)
     }
-  );
+  ).catch(function(error){next(error)});
 };
