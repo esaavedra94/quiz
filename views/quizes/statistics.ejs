@@ -14,9 +14,14 @@
         href='/stylesheets/smartphone.css' />
 </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Edgar Saavedra</p>
-    <p>J. David Oliva</p>
-    <img src="/images/autores.jpg" class="foto">
+    <h1>Estadísticas de preguntas</h1>
+    <table>
+    <tr><td>Preguntas:</td><td><b> <%= preguntas %> </b></td></tr>
+    <tr><td>Comentarios:</td><td><b> <%= comentarios %> </b></td></tr>
+    <tr><td>Comentarios publicados:</td><td><b> <%= comentariospublicados %> </b></td></tr>
+    <tr><td>Comentarios/pregunta:</td><td><b> <%= comentariospregunta %> </b></td></tr>
+    <tr><td>Preguntas con comentarios:</td><td><b> <%= preguntasconcomentarios %> </b></td></tr>
+    <tr><td>Preguntas sin comentarios:</td><td><b> <%= preguntas-preguntasconcomentarios %> </b></td></tr>
+    </table>
     </body>
 </html>
