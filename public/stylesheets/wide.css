@@ -32,3 +32,9 @@ img.foto {
   height: 130px;
   width: auto;
 }
+
+.quiz_img {
+  height: 150px;
+  width: auto;
+  float: left;
+}
