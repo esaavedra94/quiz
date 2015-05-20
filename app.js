@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
     req.session.redir = req.path;
   }
   else {
-    if (req.session.user) {
+    if (req.session.user && !req.path.match(/\/logout/)) {
       eo = new Date();
       eo = eo.getSeconds() + eo.getMinutes()*60 + eo.getHours()*3600;
       ei = 0;

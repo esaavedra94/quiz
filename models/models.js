@@ -26,15 +26,6 @@ var sequelize = new Sequelize(DB_name, user, pwd,
     }
   );
 
-/*// Usar BBDD SQLite:
-var sequelize = new Sequelize(null, null, null,
-                        {dialect: "sqlite", storage: "quiz.sqlite"}
-                      );
-
-// Importar la definición de la tabla Quiz en quiz.js
-var Quiz = sequelize.import(path.join(__dirname,'quiz'));
-*/
-
 // Importar definicion de la tabla Quiz
 var quiz_path = path.join(__dirname,'quiz');
 var Quiz = sequelize.import(quiz_path);
@@ -43,27 +34,43 @@ var Quiz = sequelize.import(quiz_path);
 var comment_path = path.join(__dirname,'comment');
 var Comment = sequelize.import(comment_path);
 
+// Importar definicion de la tabla User
+var user_path = path.join(__dirname,'user');
+var User = sequelize.import(user_path);
+
 Comment.belongsTo(Quiz); //asociación
 Quiz.hasMany(Comment);
 
+//los quizes pertenecen a un usuario registrado
+Quiz.belongsTo(User);
+User.hasMany(Quiz);
+
 exports.Quiz = Quiz; //exportar definición de la tabla Quiz
 exports.Comment = Comment; //exportar definición de la tabla Comment
+exports.User = User; //exportar definición de la tabla User
 
 //sequelize.sync() carga e inicializa tabla de preguntas en BD
 sequelize.sync().then(function() {
   //success(..) ejecuta el manejador una vez creada la tabla
-  Quiz.count().then(function(count) {
-    if (count === 0) { //la tabla se inicializa solo si está vacía
-      Quiz.create({pregunta: 'Capital de Italia',
-                  respuesta: 'Roma'
-                });
-      Quiz.create({pregunta: 'Capital de Portugal',
-                  respuesta: 'Lisboa'
-                });
-      Quiz.create({pregunta: 'Quién descubrió América',
-                  respuesta: 'Cristóbal Colón'
-                })
-      .then(function()  {console.log('Base de datos inicializada')});
+  User.count().then(function(count) {
+    if (count === 0) {
+      User.bulkCreate(
+        [ {username: 'admin',   password: 'edav',   isAdmin: true},
+          {username: 'pepe',    password: 'pepe'}
+        ]
+      ).then(function(){
+        console.log('Tabla de usuarios inicializada');
+        Quiz.count().then(function(count) {
+          if (count === 0) { //la tabla se inicializa solo si está vacía
+            Quiz.bulkCreate(
+              [ {pregunta: 'Capital de Italia',       respuesta: 'Roma',            UserId: '2'},
+                {pregunta: 'Capital de Portugal',     respuesta: 'Lisboa',          UserId: '2'},
+                {pregunta: 'Quién descubrió América', respuesta: 'Cristóbal Colón', UserId: '2'}
+              ]
+            ).then(function() {console.log('Base de datos inicializada')});
+          };
+        });
+      });
     };
   });
 });
