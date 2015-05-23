@@ -73,9 +73,12 @@ app.use(function(req, res, next) {
       break;
   }
 
-  if (req.session.user && (eo - ei) > 120) {
+  if (req.session.user && (eo - ei) > 10) {
+    //var ruta = req.get('referer');
     req.session.destroy();
+    //res.redirect('/logout');
     //dialog.info('Sesión cerrada, recargue la página');
+    //res.redirect('/');
   }
 
   ei = new Date();

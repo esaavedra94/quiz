@@ -7,6 +7,9 @@
     <h1>Estadísticas de preguntas</h1>
     <table>
     <tr><td>Preguntas:</td><td><b> <%= preguntas %> </b></td></tr>
+    <% if (session.user) { %>
+      <tr><td>Favoritos:</td><td><b> <%= favoritos %> </b></td></tr>
+    <% } %>
     <tr><td>Comentarios:</td><td><b> <%= comentarios %> </b></td></tr>
     <tr><td>Comentarios publicados:</td><td><b> <%= comentariospublicados %> </b></td></tr>
     <tr><td>Comentarios/pregunta:</td><td><b> <%= comentariospregunta %> </b></td></tr>
