@@ -60,7 +60,7 @@ exports.new = function(req, res){
 };
 
 //POST /user
-exports.create = function(req, res) {
+exports.create = function(req, res, next) {
 	var user = models.User.build(req.body.user);
 	user
 	.validate()
@@ -85,7 +85,7 @@ exports.create = function(req, res) {
 //PUT /user/:id
 exports.update = function (req, res, next){
 	req.user.username = req.body.user.username;
-	req.user.password = req.body.user.password;
+	req.user.password = req.body.user.passwordConfirm;
 	req.user
 	.validate()
 	.then(

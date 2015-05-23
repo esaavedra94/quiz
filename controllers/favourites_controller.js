@@ -3,7 +3,7 @@ var models = require('../models/models.js');
 // GET load de las preguntas que tiene un usuario como favoritas
 exports.show = function(req, res, next) {
   var options = {};
-  if (req.session.user) {
+  if (req.session && req.session.user) {
     options.where = {UserId:req.user.id}
   }
   models.Fav.findAll(options).then(

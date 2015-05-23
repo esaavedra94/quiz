@@ -3,8 +3,8 @@ var models = require('../models/models.js');
 //GET /quizes/statistics
 exports.load = function(req, res){
 	var options = {};
-	if (req.user) {
-		options.where = {UserId:req.user.id}
+	if (req.session && req.session.user) {
+		options.where = {UserId:req.session.user.id}
 	}
 	models.Quiz.findAll().then(function(p){
 		models.Comment.findAll().then(function(c){

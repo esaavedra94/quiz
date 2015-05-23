@@ -73,7 +73,7 @@ app.use(function(req, res, next) {
       break;
   }
 
-  if (req.session.user && (eo - ei) > 10) {
+  if (req.session.user && (eo - ei) > 120) {
     //var ruta = req.get('referer');
     req.session.destroy();
     //res.redirect('/logout');

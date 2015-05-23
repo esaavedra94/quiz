@@ -2,13 +2,73 @@
 <html>
   <head>
     <meta chatset="utf-8">
+    <script type="text/javascript">
+    function comparar() {
+      var uname = document.getElementById('username');
+      var pass1 = document.getElementById('password');
+      var pass2 = document.getElementById('passwordConfirm');
+      var boton = document.getElementById('boton');
+      var exp = document.getElementById('explicacion');
+      var elbueno = "#8aff84";
+      var elfeo = "#83d8ff";
+      var elmalo = "#ff6666";
+      exp.style.color = "black";
+      if (uname.value) {
+        uname.style.backgroundColor = elfeo;
+      }
+      else {
+        uname.style.backgroundColor = "white";
+      }
+      if (pass2.value) {
+        if (pass1.value !== pass2.value)  {
+          pass1.style.backgroundColor = elmalo;
+          pass2.style.backgroundColor = elmalo;
+          boton.innerHTML = "<input type='button' value='No coinciden'/>";
+        }
+        else if (pass2.value.length < 6) {
+          pass1.style.backgroundColor = elmalo;
+          pass2.style.backgroundColor = elmalo;
+          boton.innerHTML = "<input type='button' value='Mínimo 6 caracteres'/>";
+          exp.style.color = "red";
+        }
+        else if (!pass2.value.match(/[0-9]/i) || !pass2.value.match(/[a-z]/i)) {
+          pass1.style.backgroundColor = elmalo;
+          pass2.style.backgroundColor = elmalo;
+          boton.innerHTML = "<input type='button' value='Necesario letra y número'/>";
+          exp.style.color = "red";
+        }
+        else {
+          pass1.style.backgroundColor = elbueno;
+          pass2.style.backgroundColor = elbueno;
+          boton.innerHTML = "<input type='submit' value='Enviar :D'/>";
+        }
+      }
+      else {
+        pass1.style.backgroundColor = "white";
+        pass2.style.backgroundColor = "white";
+        boton.innerHTML = "<input type='button' value='Falta contraseña'/>";
+      }
+      if (!pass1.value) {
+        pass1.style.backgroundColor = "white";
+        pass2.style.backgroundColor = "white";
+      }
+    }
+    </script>
+    <style>
+    #explicacion {
+      font-size: 0.7em;
+      font-style: italic;
+    }
+    </style>
   </head>
   <body>
     <label for="preg" class="rem">Usuario:</label><br>
-    <input type="text" id="username" name="user[username]" value="<%= user.username %>"/> <br><br><p>
+    <input type="text" id="username" name="user[username]" value="<%= user.username %>" onkeyup="comparar(); return false;"/> <br><br><p>
     <label for="resp" class="rem">Contraseña:</label><br>
-    <input type="password" id="password" name="user[password]"/> <p>
+    <span id=explicacion>(6+ caracteres con letras y números)</span><br>
+    <input type="password" id="password" placeholder="Contraseña" onkeyup="comparar(); return false;"/> <p>
+    <input type="password" id="passwordConfirm" name="user[password]" placeholder="Confirme contraseña" onkeyup="comparar(); return false;"/> <p><br>
     <a href="/"><button type="button">Cancelar</button></a>
-    <input type="submit" value="Enviar">
+    <span id="boton"><input type="button" value="Campos vacíos"/></span>
   </body>
 </html>
