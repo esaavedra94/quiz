@@ -5,7 +5,7 @@
     <title>Quiz Edav</title>
     </head>
   <body>
-    <h2>Jugando a Quiz, pregunta <%= req.session.played+1 %> de <%= quizes.length %></h2>
+    <h2>Jugando a Quiz, pregunta <%= req.session.user.played+1 %> de <%= quizes.length %></h2>
 
     <% if (quiz.image) { %>
       <p><img class="quiz_img" src="/media/<%= quiz.image %>"></p>
