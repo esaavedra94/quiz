@@ -11,8 +11,6 @@ var methodOverride = require('method-override');
 
 var session = require('express-session');
 
-//var dialog = require('dialog');
-
 var routes = require('./routes/index');
 var creditos = require('./routes/author');
 
