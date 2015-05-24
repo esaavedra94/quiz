@@ -43,6 +43,12 @@ router.get('/logout',                               sessionController.destroy); 
 //definicion de la ruta de estadísticas
 router.get('/quizes/statistics',                    sessionController.autologout, statisticsController.load);
 
+//definición de las rutas de administración de cuentas
+router.get('/adminusers',                           sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.show);
+router.get('/adminusers/kill',                      sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.kill);
+router.get('/adminusers/new',                       sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.newFromAdmin);
+router.post('/adminusers/new',                      sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.createFromAdmin);
+
 //definición de las rutas de cuentas
 router.get('/user',                                 sessionController.autologout, userController.new); //formulario sign up
 router.post('/user',                                sessionController.autologout, userController.create); //registrar usuario

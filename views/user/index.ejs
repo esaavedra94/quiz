@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Usuarios</title>
+  </head>
+  <body>
+    <h2>Administración de usuarios</h2>
+    <table>
+      <% var i; for (i=0; i<users.length; i++) { %>
+       <% if (req.session && (users[i].id !== req.session.user.id)) { %>
+       <tr>
+         <td>
+           <%= users[i].username %>
+         </td>
+         <td>
+           <form method="get" action="/adminusers/kill">
+             <input type="hidden" name="kill" value="<%= users[i].id %>"/>
+             <input type="submit" value="Eliminar usuario" onClick="return confirm('Comfirme que desea eliminar el usuario: <%= users[i].username %>');"/>
+           </form>
+         </td>
+       </tr>
+       <% }
+     } %>
+    </table>
+
+    <style>
+    table {
+      font-size: larger;
+    }
+    </style>
+
+    <br>
+    <form method="get" action="/adminusers/new">
+      <input type="hidden" name="make" value="true"/>
+      <input type="submit" value="Crear usuario"/>
+    </form>
+
+  </body>
+</html>

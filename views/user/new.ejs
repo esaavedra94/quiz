@@ -6,8 +6,15 @@
   </head>
   <body>
     <h2>Crear usuario:</h2><p>
-    <form method="post" action="/user" >
-      <% include _form.ejs %>
-    </form>
+    <% if (admin) { %>
+      <form method="post" action="/adminusers/new" >
+        <% include _form.ejs %>
+      </form>
+    <% }
+    else { %>
+      <form method="post" action="/user" >
+        <% include _form.ejs %>
+      </form>
+    <% } %>
   </body>
 </html>

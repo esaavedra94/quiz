@@ -40,6 +40,7 @@
         <% if (session.user) { %> <span><a href="/quizes/play">¡Juego!</a></span><% } %>
         <% if (session.user) { %> <span><a href="/user/<%= session.user.id %>/quizes">Mis preguntas</a></span><% } %>
         <% if (session.user) { %> <span><a href="/user/<%= session.user.id %>/favourites">Favoritos</a></span><% } %>
+        <% if (session.user && session.user.isAdmin) { %> <span><a href="/adminusers">Usuarios</a></span><% } %>
         <span><a href="/quizes/statistics">Estadísticas</a></span>
       </nav>
 

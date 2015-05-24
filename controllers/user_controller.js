@@ -1,6 +1,6 @@
 var models = require('../models/models.js');
 
-//MW que permite acciones solamente si el quiz objeto pertenece al usuario logueado o si es cuenta admin
+//MW que permite acciones solamente si usuario logueado es el propietario o si es cuenta admin
 exports.ownershipRequired = function(req, res, next) {
   var objUser = req.user.id;
   var logUser = req.session.user.id;
@@ -11,6 +11,25 @@ exports.ownershipRequired = function(req, res, next) {
   else {
     res.redirect('/');
   }
+};
+
+//Comprueba si es admin
+exports.adminRequired = function(req, res, next) {
+  models.User.find({where: { id: req.session.user.id }})
+	.then(function(user){
+		if(user.isAdmin) {
+			next();
+		}
+    else{next(new Error ('El usuario no es administrador'))}
+	}
+	).catch(function(error){next(error)});
+};
+
+//Para renderizar los usuarios
+exports.show = function(req, res, next) {
+  models.User.findAll().then(function(users) {
+    res.render('user/index.ejs', {req: req, users: users, errors: []});
+  })
 };
 
 //Autoload :userId
@@ -56,12 +75,12 @@ exports.new = function(req, res){
 	var user = models.User.build(// creaobjeto user
 		{username: "", password: ""}
 		);
-    res.render('user/new', {user: user, errors: []});
+    res.render('user/new', {admin: false, user: user, errors: []});
 };
 
 //POST /user
 exports.create = function(req, res, next) {
-	var user = models.User.build(req.body.user);
+  var user = models.User.build(req.body.user);
 	user
 	.validate()
 	.then(
@@ -73,9 +92,9 @@ exports.create = function(req, res, next) {
 				user //save guarda en DB campos username y password de user
 				.save({fields: ["username", "password"]})
 				.then( function(){
-					//crea la sesion con el usuario autenticado y redirige a /
-					req.session.user = {id:user.id, username:user.username};
-					res.redirect('/');
+					//crea la sesion con el usuario autenticado y redirige
+          req.session.user = {id:user.id, username:user.username};
+          res.redirect('/');
 				});
 			}
 		}
@@ -109,4 +128,43 @@ exports.destroy = function(req, res){
    delete req.session.user;
    res.redirect('/');
    }).catch(function(error){next(error)});
+};
+
+//DELETE /adminuser
+exports.kill = function(req, res, next){
+   var options = {};
+   options.where = {id:req.query.kill}
+   models.User.find(options).then(function(userToKill) {
+     userToKill.destroy();
+     res.redirect('/adminusers');
+   }).catch(function(error){next(error)});
+};
+
+//GET /adminusers/new
+exports.newFromAdmin = function(req, res){
+	var user = models.User.build(// creaobjeto user
+		{username: "", password: ""}
+		);
+    res.render('user/new', {admin: true, user: user, errors: []});
+};
+
+//POST /adminusers/mew
+exports.createFromAdmin = function(req, res, next) {
+  var user = models.User.build(req.body.user);
+	user
+	.validate()
+	.then(
+		function(err){
+			if(err) {
+				res.render('user/new', {user: user, errors: err.errors});
+			}
+      else {
+				user //save guarda en DB campos username y password de user
+				.save({fields: ["username", "password"]})
+				.then( function(){
+          res.redirect('/adminusers');
+				});
+			}
+		}
+	).catch(function(error){next(error)});
 };
