@@ -85,7 +85,7 @@ exports.create = function(req, res, next) {
 //PUT /user/:id
 exports.update = function (req, res, next){
 	req.user.username = req.body.user.username;
-	req.user.password = req.body.user.passwordConfirm;
+	req.user.password = req.body.user.password;
 	req.user
 	.validate()
 	.then(
@@ -95,7 +95,7 @@ exports.update = function (req, res, next){
 			}
       else {
 				req.user  //save guardar campo username y pssword en DB
-				.save( {fields: ["Username", "password"]})
+				.save( {fields: ["username", "password"]})
 				.then( function(){ res.redirect('/');});
 			} // Redireccion HTTP a /
 		}
