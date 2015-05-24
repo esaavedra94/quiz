@@ -103,30 +103,38 @@ exports.myQuestions = function(req, res) {
 exports.play = function(req, res) {
   var quizes;
 
-  if(req.query.retry) {
-    req.session.user.played = 0;
-    req.session.user.hits = 0;
+  if (req.query.stop) {
+    req.session.user.mostrar = false;
+    res.render('quizes/playresults', {req:req, errors:[]});
   }
 
-  if (!req.session.user.played) req.session.user.played = 0;
+  else {
 
-  if (req.query.bandera) req.session.user.played++;
-
-  if (!req.session.user.hits) req.session.user.hits = 0;
-
-  models.Quiz.findAll().then(function(preguntas){
-    quizes = preguntas;
-    if ((req.session.user.played > 0) && req.query && (req.query.respuesta === quizes[req.session.user.played-1].respuesta)) req.session.user.hits++;
-  })
-  .then(function() {
-    if (req.session.user.played < quizes.length) {
-      res.render('quizes/playshow', {quiz:quizes[req.session.user.played], quizes:quizes, req:req, errors:[]});
-    }
-    else {
+    if (req.query.retry) {
+      req.session.user.mostrar = true;
       req.session.user.played = 0;
-      res.render('quizes/playresults', {quizes:quizes, req:req, errors:[]});
+      req.session.user.hits = 0;
     }
-  });
+
+    if (!req.session.user.played) req.session.user.played = 0;
+
+    if (req.query.bandera) req.session.user.played++;
+
+    if (!req.session.user.hits) req.session.user.hits = 0;
+
+    models.Quiz.findAll().then(function(preguntas){
+      quizes = preguntas;
+      if ((req.session.user.played > 0) && req.query && (req.query.respuesta === quizes[req.session.user.played-1].respuesta)) req.session.user.hits++;
+    })
+    .then(function() {
+      if ((req.session.user.played < quizes.length) && (req.session.user.mostrar !== false)) {
+        res.render('quizes/playshow', {quiz:quizes[req.session.user.played], quizes:quizes, req:req, errors:[]});
+      }
+      else {
+        res.render('quizes/playresults', {req:req, errors:[]});
+      }
+    });
+  }
 };
 
 // GET /quizes/:id

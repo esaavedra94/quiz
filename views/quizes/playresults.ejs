@@ -5,10 +5,10 @@
     <title>Quiz Edav</title>
     </head>
   <body>
-    <h2>Has respondido <%= quizes.length %> preguntas,<br>
+    <h2>Has respondido <%= req.session.user.played %> preguntas,<br>
       de las cuales has acertado <%= req.session.user.hits %> </h2>
       <br>
-    <% if (req.session.user.hits >= (quizes.length / 2)) { %>
+    <% if ((req.session.user.hits > 0) && (req.session.user.hits >= (req.session.user.played / 2))) { %>
       <style>
       #summary {
         color: green;
@@ -22,7 +22,7 @@
         color: red;
       }
       </style>
-      <strong id="summary">¡Irá mejor la próxima vez, <%= req.session.user.username %> !</strong>
+      <strong id="summary">¡Irá mejor la próxima vez, <%= req.session.user.username %>!</strong>
     <% } %>
 
     <br>

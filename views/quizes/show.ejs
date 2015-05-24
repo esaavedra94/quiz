@@ -19,14 +19,20 @@
 
     <p><button onclick="pistear()">Pedir pista</button></p>
     <span id="pista"></span>
+    <style>
+    #pista {
+      color: green;
+      font-style: italic;
+    }
+    </style>
 
     <script>
     function pistear() {
       if (document.getElementById("pista").innerHTML === "") {
-        document.getElementById("pista").innerHTML = "<i>Primera letra: <%= quiz.respuesta[0] %></i>";
+        document.getElementById("pista").innerHTML = "Primera letra: <%= quiz.respuesta[0] %>";
       }
       else if (<%= quiz.respuesta.length %> >= 2) {
-        document.getElementById("pista").innerHTML = "<i>Primeras letras: <%= quiz.respuesta[0] %><%= quiz.respuesta[1] %></i>";
+        document.getElementById("pista").innerHTML = "Primeras letras: <%= quiz.respuesta[0] %><%= quiz.respuesta[1] %>";
       }
     }
     </script>

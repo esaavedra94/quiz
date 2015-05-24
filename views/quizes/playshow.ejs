@@ -18,12 +18,37 @@
         <input type="submit" value="Enviar"/>
     </form>
 
+    <p><button onclick="pistear()">Pedir pista</button></p>
+    <span id="pista"></span>
+    <style>
+    #pista {
+      color: green;
+      font-style: italic;
+    }
+    </style>
+
+    <script>
+    function pistear() {
+      if (document.getElementById("pista").innerHTML === "") {
+        document.getElementById("pista").innerHTML = "Primera letra: <%= quiz.respuesta[0] %>";
+      }
+      else if (<%= quiz.respuesta.length %> >= 2) {
+        document.getElementById("pista").innerHTML = "Primeras letras: <%= quiz.respuesta[0] %><%= quiz.respuesta[1] %>";
+      }
+    }
+    </script>
+
     <p><strong>Comentarios:</strong></p>
     <% for(index in quiz.Comments){ %>
       <% if(quiz.Comments[index].publicado){ %>
         <p>>> <%= quiz.Comments[index].texto %>
          <% }
      } %>
+
+     <br><form method="get" action="/quizes/play">
+         <input type="hidden" name="stop" value="true"/>
+         <input type="submit" value="Terminar juego :("/>
+     </form>
 
   </body>
 </html>

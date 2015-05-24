@@ -17,6 +17,7 @@ body {
   padding: 1%;
   margin-bottom: 1px;
   color: black;
+  height: auto;
 }
 
 section > div {
