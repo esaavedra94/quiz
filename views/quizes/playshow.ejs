@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta chatset="utf-8">
+    <title>Quiz Edav</title>
+    </head>
+  <body>
+    <h2>Jugando a Quiz, pregunta <%= req.session.played+1 %> de <%= quizes.length %></h2>
+
+    <% if (quiz.image) { %>
+      <p><img class="quiz_img" src="/media/<%= quiz.image %>"></p>
+    <% } %>
+
+    <form method="get" action="/quizes/play">
+      Pregunta: <%= quiz.pregunta %> <p>
+        <input type="text" name="respuesta" placeholder="Responda aquí" autofocus="autofocus"/>
+        <input type="hidden" name="bandera" value="true"/>
+        <input type="submit" value="Enviar"/>
+    </form>
+
+    <p><strong>Comentarios:</strong></p>
+    <% for(index in quiz.Comments){ %>
+      <% if(quiz.Comments[index].publicado){ %>
+        <p>>> <%= quiz.Comments[index].texto %>
+         <% }
+     } %>
+
+  </body>
+</html>

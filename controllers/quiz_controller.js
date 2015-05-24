@@ -99,6 +99,36 @@ exports.myQuestions = function(req, res) {
   }).catch(function(error){next(error)});
 };
 
+// GET /quizes/play
+exports.play = function(req, res) {
+  var quizes;
+
+  if(req.query.retry) {
+    req.session.played = 0;
+    req.session.hits = 0;
+  }
+
+  if (!req.session.played) req.session.played = 0;
+
+  if (req.query.bandera) req.session.played++;
+
+  if (!req.session.hits) req.session.hits = 0;
+
+  models.Quiz.findAll().then(function(preguntas){
+    quizes = preguntas;
+    if ((req.session.played > 0) && req.query && (req.query.respuesta === quizes[req.session.played-1].respuesta)) req.session.hits++;
+  })
+  .then(function() {
+    if (req.session.played < quizes.length) {
+      res.render('quizes/playshow', {quiz:quizes[req.session.played], quizes:quizes, req:req, errors:[]});
+    }
+    else {
+      req.session.played = 0;
+      res.render('quizes/playresults', {quizes:quizes, req:req, errors:[]});
+    }
+  });
+};
+
 // GET /quizes/:id
 exports.show = function(req, res) {
   res.render('quizes/show', { quiz: req.quiz, errors: []});

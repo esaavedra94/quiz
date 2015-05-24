@@ -37,11 +37,10 @@
       <nav class="main" id="n1" role="navigation">
         <span><a href="/">Inicio</a></span>
         <span><a href="/quizes">Preguntas</a></span>
+        <% if (session.user) { %> <span><a href="/quizes/play">¡Jugar!</a></span><% } %>
         <% if (session.user) { %> <span><a href="/user/<%= session.user.id %>/quizes">Mis preguntas</a></span><% } %>
         <% if (session.user) { %> <span><a href="/user/<%= session.user.id %>/favourites">Favoritos</a></span><% } %>
-        <span><a href="/author">Créditos</a></span>
         <span><a href="/quizes/statistics">Estadísticas</a></span>
-        <span><a href="https://github.com/esaavedra94/quiz">GitHub</a></span>
       </nav>
 
       <section class="main" id="s1">
@@ -57,8 +56,9 @@
       </section>
 
       <footer class="main" id="f1">
-        <a href="http://es.wikipedia.org/wiki/Quiz">
-          ¿Qué es un Quiz?</a>
+        <span><a href="http://es.wikipedia.org/wiki/Quiz">¿Qué es un Quiz?</a></span>
+        <span><a href="/author">Autores</a></span>
+        <span><a href="https://github.com/esaavedra94/quiz">GitHub</a></span>
       </footer>
     </div>
   </body>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta chatset="utf-8">
+    <title>Quiz Edav</title>
+    </head>
+  <body>
+    <h2>Has respondido <%= quizes.length %> preguntas,<br>
+      de las cuales has acertado <%= req.session.hits %> </h2>
+      <br>
+    <% if (req.session.hits >= (quizes.length / 2)) { %>
+      <style>
+      #summary {
+        color: green;
+      }
+      </style>
+      <strong id="summary">¡Muy bien, <%= req.session.user.username %>!</strong>
+    <% }
+    else { %>
+      <style>
+      #summary {
+        color: red;
+      }
+      </style>
+      <strong id="summary">¡Irá mejor la próxima vez, <%= req.session.user.username %> !</strong>
+    <% } %>
+
+    <br>
+    <form method="get" action="/quizes/play">
+        <input type="hidden" name="retry" value="true"/>
+        <input type="submit" value="Jugar otra vez :D"/>
+    </form>
+
+  </body>
+</html>
