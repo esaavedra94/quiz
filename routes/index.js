@@ -20,40 +20,40 @@ router.param('commentId', commentController.load);  // autoload :commentId
 router.param('userId', userController.load); //autoload :userId
 
 // Definición de rutas de /quizes
-router.get('/quizes',                               quizController.index);
-router.get('/quizes/:quizId(\\d+)',                 quizController.show);
-router.get('/quizes/:quizId(\\d+)/answer',          quizController.answer);
-router.get('/quizes/new',                           sessionController.loginRequired, quizController.new);
-router.post('/quizes/create',                       sessionController.loginRequired, multer({dest:'./public/media/'}), quizController.create);
-router.get('/quizes/:quizId(\\d+)/edit',            sessionController.loginRequired, quizController.ownershipRequired, quizController.edit);
-router.put('/quizes/:quizId(\\d+)',                 sessionController.loginRequired, quizController.ownershipRequired, multer({dest:'./public/media/'}), quizController.update);
-router.delete('/quizes/:quizId(\\d+)',              sessionController.loginRequired, quizController.ownershipRequired, quizController.destroy);
-router.get('/quizes/play',                          sessionController.loginRequired, quizController.play);
+router.get('/quizes',                               sessionController.autologout, quizController.index);
+router.get('/quizes/:quizId(\\d+)',                 sessionController.autologout, quizController.show);
+router.get('/quizes/:quizId(\\d+)/answer',          sessionController.autologout, quizController.answer);
+router.get('/quizes/new',                           sessionController.autologout, sessionController.loginRequired, quizController.new);
+router.post('/quizes/create',                       sessionController.autologout, sessionController.loginRequired, multer({dest:'./public/media/'}), quizController.create);
+router.get('/quizes/:quizId(\\d+)/edit',            sessionController.autologout, sessionController.loginRequired, quizController.ownershipRequired, quizController.edit);
+router.put('/quizes/:quizId(\\d+)',                 sessionController.autologout, sessionController.loginRequired, quizController.ownershipRequired, multer({dest:'./public/media/'}), quizController.update);
+router.delete('/quizes/:quizId(\\d+)',              sessionController.autologout, sessionController.loginRequired, quizController.ownershipRequired, quizController.destroy);
+router.get('/quizes/play',                          sessionController.autologout, sessionController.loginRequired, quizController.play);
 
 //definicion de rutas de comentarios
-router.get('/quizes/:quizId(\\d+)/comments/new',    commentController.new);
-router.post('/quizes/:quizId(\\d+)/comments',       commentController.create);
-router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, quizController.ownershipRequired, commentController.publish);
+router.get('/quizes/:quizId(\\d+)/comments/new',    sessionController.autologout, commentController.new);
+router.post('/quizes/:quizId(\\d+)/comments',       sessionController.autologout, commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.autologout, sessionController.loginRequired, quizController.ownershipRequired, commentController.publish);
 
 // Definición de rutas de sesion
-router.get('/login',                                sessionController.new);     // formulario login
-router.post('/login',                               sessionController.create);  // crear sesión
+router.get('/login',                                sessionController.autologout, sessionController.new);     // formulario login
+router.post('/login',                               sessionController.autologout, sessionController.create);  // crear sesión
 router.get('/logout',                               sessionController.destroy); // destruir sesión
 
 //definicion de la ruta de estadísticas
-router.get('/quizes/statistics',                    statisticsController.load);
+router.get('/quizes/statistics',                    sessionController.autologout, statisticsController.load);
 
 //definición de las rutas de cuentas
-router.get('/user',                                 userController.new); //formulario sign up
-router.post('/user',                                userController.create); //registrar usuario
-router.get('/user/:userId(\\d+)/edit',              sessionController.loginRequired, userController.ownershipRequired, userController.edit);
-router.put('/user/:userId(\\d+)',                   sessionController.loginRequired, userController.ownershipRequired, userController.update);
-router.delete('/user/:userId(\\d+)',                sessionController.loginRequired, userController.ownershipRequired, userController.destroy);
-router.get('/user/:userId(\\d+)/quizes',            quizController.myQuestions); //ver las preguntas de un usuario
+router.get('/user',                                 sessionController.autologout, userController.new); //formulario sign up
+router.post('/user',                                sessionController.autologout, userController.create); //registrar usuario
+router.get('/user/:userId(\\d+)/edit',              sessionController.autologout, sessionController.loginRequired, userController.ownershipRequired, userController.edit);
+router.put('/user/:userId(\\d+)',                   sessionController.autologout, sessionController.loginRequired, userController.ownershipRequired, userController.update);
+router.delete('/user/:userId(\\d+)',                sessionController.autologout, sessionController.loginRequired, userController.ownershipRequired, userController.destroy);
+router.get('/user/:userId(\\d+)/quizes',            sessionController.autologout, quizController.myQuestions); //ver las preguntas de un usuario
 
 //definición de las rutas de los favoritos
-router.get('/user/:userId(\\d+)/favourites',                   sessionController.loginRequired, favouritesController.show);
-router.put('/user/:userId(\\d+)/favourites/:quizId(\\d+)',     sessionController.loginRequired, favouritesController.fav);
-router.delete('/user/:userId(\\d+)/favourites/:quizId(\\d+)',  sessionController.loginRequired, favouritesController.unfav);
+router.get('/user/:userId(\\d+)/favourites',                   sessionController.autologout, sessionController.loginRequired, favouritesController.show);
+router.put('/user/:userId(\\d+)/favourites/:quizId(\\d+)',     sessionController.autologout, sessionController.loginRequired, favouritesController.fav);
+router.delete('/user/:userId(\\d+)/favourites/:quizId(\\d+)',  sessionController.autologout, sessionController.loginRequired, favouritesController.unfav);
 
 module.exports = router;

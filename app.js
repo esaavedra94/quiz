@@ -18,9 +18,6 @@ var creditos = require('./routes/author');
 
 var app = express();
 
-var eo;
-var ei;
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -49,41 +46,24 @@ app.use(function(req, res, next) {
   if (!req.path.match(/\/login|\/logout|\/user/)) {
     req.session.redir = req.path;
   }
-  else {
-    if (req.session.user && !req.path.match(/\/logout/)) {
-      eo = new Date();
-      eo = eo.getSeconds() + eo.getMinutes()*60 + eo.getHours()*3600;
-      ei = 0;
-    }
-  }
   // Hacer visible req.session en las vistas
   res.locals.session = req.session;
   next();
 });
 
 app.use(function(req, res, next) {
-  switch(ei) {
-    case 0:
-      ei = new Date();
-      ei = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
-      break;
-    default:
-      eo = new Date();
-      eo = eo.getSeconds() + eo.getMinutes()*60 + eo.getHours()*3600;
-      break;
+if (req.session.user) {
+    if (!req.session.user.ei) {
+      var ei = new Date();
+      req.session.user.ei = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
+      req.session.user.eo = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
+    }
+    else {
+      req.session.user.eo = req.session.user.ei;
+      var ei = new Date();
+      req.session.user.ei = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
+    }
   }
-
-  if (req.session.user && (eo - ei) > 120) {
-    //var ruta = req.get('referer');
-    req.session.destroy();
-    //res.redirect('/logout');
-    //dialog.info('Sesión cerrada, recargue la página');
-    //res.redirect('/');
-  }
-
-  ei = new Date();
-  ei = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
-
   next();
 });
 

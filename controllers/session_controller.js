@@ -43,3 +43,9 @@ exports.destroy = function(req, res) {
     delete req.session.user;
     res.redirect(req.session.redir.toString()); // redirect a path anterior a login
 };
+
+//autologout
+exports.autologout = function(req, res, next) {
+  if (req.session.user && ((req.session.user.ei - req.session.user.eo) > 120)) res.redirect('/logout');
+  else next();
+}

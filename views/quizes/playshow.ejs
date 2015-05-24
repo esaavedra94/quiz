@@ -38,13 +38,6 @@
     }
     </script>
 
-    <p><strong>Comentarios:</strong></p>
-    <% for(index in quiz.Comments){ %>
-      <% if(quiz.Comments[index].publicado){ %>
-        <p>>> <%= quiz.Comments[index].texto %>
-         <% }
-     } %>
-
      <br><form method="get" action="/quizes/play">
          <input type="hidden" name="stop" value="true"/>
          <input type="submit" value="Terminar juego :("/>
