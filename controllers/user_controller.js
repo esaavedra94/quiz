@@ -168,3 +168,14 @@ exports.createFromAdmin = function(req, res, next) {
 		}
 	).catch(function(error){next(error)});
 };
+
+//PUT /adminusers
+exports.adminPower = function(req, res, next) {
+  var options = {};
+  options.where = {id:req.query.power}
+  models.User.find(options).then(function(userToPower) {
+    userToPower.isAdmin = !userToPower.isAdmin;
+    userToPower.save().then(function() {});
+    res.redirect('/adminusers');
+  }).catch(function(error){next(error)});
+};

@@ -4,8 +4,9 @@
   <meta charset="utf-8"><title>Estadísticas</title>
 </head>
   <body>
-    <h1>Estadísticas de preguntas</h1>
+    <h1>Estadísticas de Quiz</h1>
     <table>
+    <tr><td>Usuarios registrados:</td><td><b> <%= usuarios %> </b></td></tr>
     <tr><td>Preguntas:</td><td><b> <%= preguntas %> </b></td></tr>
     <% if (session.user) { %>
       <tr><td>Favoritos:</td><td><b> <%= favoritos %> </b></td></tr>

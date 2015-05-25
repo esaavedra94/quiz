@@ -48,6 +48,7 @@ router.get('/adminusers',                           sessionController.autologout
 router.get('/adminusers/kill',                      sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.kill);
 router.get('/adminusers/new',                       sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.newFromAdmin);
 router.post('/adminusers/new',                      sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.createFromAdmin);
+router.get('/adminusers/power',                     sessionController.autologout, sessionController.loginRequired, userController.adminRequired, userController.adminPower);
 
 //definición de las rutas de cuentas
 router.get('/user',                                 sessionController.autologout, userController.new); //formulario sign up

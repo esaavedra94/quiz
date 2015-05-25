@@ -14,6 +14,16 @@
            <%= users[i].username %>
          </td>
          <td>
+           <form method="get" action="/adminusers/power">
+             <input type="hidden" name="power" value="<%= users[i].id %>"/>
+             <% if (!users[i].isAdmin) { %>
+               <input type="submit" value="Hacer administrador" onClick="return confirm('Comfirme que desea dar potestad de administrador al usuario: <%= users[i].username %>');"/>
+             <% } else { %>
+               <input type="submit" value="Anular administración"/>
+             <% } %>
+           </form>
+         </td>
+         <td>
            <form method="get" action="/adminusers/kill">
              <input type="hidden" name="kill" value="<%= users[i].id %>"/>
              <input type="submit" value="Eliminar usuario" onClick="return confirm('Comfirme que desea eliminar el usuario: <%= users[i].username %>');"/>
