@@ -13,7 +13,7 @@ nav {
 }
 
 nav span {
-  margin: 0px 100px 0px 0px;
+  margin: 10px 100px 10px 0px;
   display: inline-block;
 }
 
@@ -29,8 +29,8 @@ footer {
 }
 
 img.foto {
-  height: 130px;
-  width: auto;
+  width: 60%;
+  height: auto;
 }
 
 .quiz_img {

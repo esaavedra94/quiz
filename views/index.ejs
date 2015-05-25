@@ -6,9 +6,9 @@
   </head>
   <body>
     <% if (session.user) { %>
-      <h1>Bienvenido a <%= title %>, <%= session.user.username %> </h1>
+      <h2>Bienvenido a <%= title %>, <%= session.user.username %> </h2>
     <% } else { %>
-    <h1>Bienvenido a <%= title %> </h1>
+    <h2>Bienvenido a <%= title %> </h2>
     <% } %>
     <p>El portal donde podrá crear sus propios juegos</p>
   </body>

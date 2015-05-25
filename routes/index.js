@@ -10,14 +10,19 @@ var userController = require('../controllers/user_controller');
 var favouritesController = require('../controllers/favourites_controller');
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Quiz Edav', errors: [] });
-});
+router.get('/', sessionController.autologout, function(req, res) {
+                                                  res.render('index', { title: "Quiz Edav", errors: [] });}
+          );
 
 // Autoload de comandos con: quizId
 router.param('quizId', quizController.load);   // autoload: quizId
 router.param('commentId', commentController.load);  // autoload :commentId
 router.param('userId', userController.load); //autoload :userId
+
+// Ruta de página de Autores
+router.get('/author', sessionController.autologout, function(req, res) {
+                                                      res.render('author', { errors: [] });}
+          );
 
 // Definición de rutas de /quizes
 router.get('/quizes',                               sessionController.autologout, quizController.index);

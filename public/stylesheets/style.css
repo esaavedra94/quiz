@@ -28,6 +28,10 @@ header, nav, section {
   background: #eee; text-align: center;
 }
 
+h1 {
+  text-align: left;
+}
+
 footer {
   background: #eee; text-align: center;
 }
@@ -38,7 +42,7 @@ footer span {
 }
 
 nav span {
-  margin: 0px 10px 0px 0px;
+  margin: 0px 3% 0px 0px;
   width: 100%;
 }
 
@@ -49,6 +53,7 @@ a {
 img.foto {
   width: 80%;
   margin: auto;
+  max-width: 600px;
 }
 
 table {
