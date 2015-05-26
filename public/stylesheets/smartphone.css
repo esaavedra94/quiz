@@ -1,5 +1,16 @@
+h1 {
+  font-size: 1.5em;
+  padding-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.2em;
+  padding-bottom: 20px;
+}
+
 body {
   background: #333;
+  font-size: x-large;
 }
 
 #page-wrapper:after {
@@ -10,8 +21,8 @@ h2 span, section h3 {
   display: none;
 }
 
-body {
-  font-size: xx-large;
+td {
+  padding-bottom: 10px;
 }
 
 footer, input {

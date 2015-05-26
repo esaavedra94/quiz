@@ -51,14 +51,14 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
 if (req.session.user) {
     if (!req.session.user.ei) {
-      var ei = new Date();
-      req.session.user.ei = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
-      req.session.user.eo = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
+      var ei = Date.now();
+      req.session.user.ei = ei;
+      req.session.user.eo = ei;
     }
     else {
+      var ei = Date.now();
       req.session.user.eo = req.session.user.ei;
-      var ei = new Date();
-      req.session.user.ei = ei.getSeconds() + ei.getMinutes()*60 + ei.getHours()*3600;
+      req.session.user.ei = ei;
     }
   }
   next();
