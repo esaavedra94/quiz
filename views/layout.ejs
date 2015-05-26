@@ -12,6 +12,8 @@
           type='text/css'
           media='only screen and (max-width: 480px)'
           href='/stylesheets/smartphone.css' />
+    <script type="text/javascript" src="/libs/jquery-2.1.4.min.js"></script>
+
   </head>
 
   <body>
@@ -56,11 +58,23 @@
         <div> <%- body %> </div>
       </section>
 
+      <% if (session.message) { %>
+        <script>
+          $(document).ready(function() {
+            $(".flash").fadeOut(3000, function() { $("#f1").html("<span><a href='http://es.wikipedia.org/wiki/Quiz'>¿Qué es un Quiz?</a></span><span><a href='/author'>Autores</a></span><span><a href='https://github.com/esaavedra94/quiz'>GitHub</a></span>");});
+          });
+        </script>
+        <footer class="main" id="f1">
+          <span class="flash">La sesión ha sido cerrada por falta de actividad.</span>
+        </footer>
+      <% session.message = false;
+    } else { %>
       <footer class="main" id="f1">
         <span><a href="http://es.wikipedia.org/wiki/Quiz">¿Qué es un Quiz?</a></span>
         <span><a href="/author">Autores</a></span>
         <span><a href="https://github.com/esaavedra94/quiz">GitHub</a></span>
       </footer>
+      <% } %>
     </div>
   </body>
 </html>

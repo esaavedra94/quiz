@@ -46,6 +46,9 @@ exports.destroy = function(req, res) {
 
 //autologout
 exports.autologout = function(req, res, next) {
-  if (req.session.user && ((req.session.user.ei - req.session.user.eo) > 120000)) res.redirect('/logout');
+  if (req.session.user && ((req.session.user.ei - req.session.user.eo) > 120000)) {
+    req.session.message = true;
+    res.redirect('/logout');
+  }
   else next();
 }

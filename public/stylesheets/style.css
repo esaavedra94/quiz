@@ -80,3 +80,8 @@ table {
   max-width: 250px;;
   /*float: left;*/
 }
+
+.flash {
+  font-size: 2em;
+  color: red;
+}
