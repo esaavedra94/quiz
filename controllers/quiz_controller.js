@@ -114,11 +114,18 @@ exports.play = function(req, res) {
       req.session.user.mostrar = true;
       req.session.user.played = 0;
       req.session.user.hits = 0;
+      req.session.user.gameTimer = 0;
     }
 
-    if (!req.session.user.played) req.session.user.played = 0;
+    if (!req.session.user.played) {
+      req.session.user.played = 0;
+      req.session.user.gameTimer = 0;
+    }
 
-    if (req.query.bandera) req.session.user.played++;
+    if (req.query.bandera) {
+      req.session.user.played++;
+      req.session.user.gameTimer = req.query.timeLeft-5;
+    }
 
     if (!req.session.user.hits) req.session.user.hits = 0;
 

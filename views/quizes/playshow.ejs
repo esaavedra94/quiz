@@ -15,6 +15,7 @@
       Pregunta: <%= quiz.pregunta %> <p>
         <input type="text" name="respuesta" placeholder="Responda aquí" autofocus="autofocus"/>
         <input type="hidden" name="bandera" value="true"/>
+        <input type="hidden" name="timeLeft" value="default"/>
         <input type="submit" value="Enviar"/>
     </form>
 
@@ -40,8 +41,48 @@
 
      <br><form method="get" action="/quizes/play">
          <input type="hidden" name="stop" value="true"/>
-         <input type="submit" value="Terminar juego :("/>
+         <input type="submit" value="Terminar juego :(" id="finishButton"/>
      </form>
+
+       <script>
+       $(function(){
+         var div = $("#temp");
+         if (<%= req.session.user.played %> === 0) {
+           var time = <%= quizes.length %> * 40;
+           var timeStr = String(time);
+           document.forms[1].elements["timeLeft"].value = time;
+           div.html(timeStr[0]+timeStr[1]+'.'+timeStr[2]);
+         }
+         else {
+           var time = <%= req.session.user.gameTimer %>;
+           var timeStr = String(time);
+           document.forms[1].elements["timeLeft"].value = time;
+           if (time >= 100) div.html(timeStr[0]+timeStr[1]+'.'+timeStr[2]);
+           else if (time >= 10) div.html('0'+timeStr[0]+'.'+timeStr[1]);
+           else div.html('00.'+timeStr[0]);
+         }
+
+         setInterval(corre, 100);
+
+         function corre(){
+           time -= 1;
+           timeStr = String(time);
+           document.forms[1].elements["timeLeft"].value = time;
+
+           if (time >= 100) div.html(timeStr[0]+timeStr[1]+'.'+timeStr[2]);
+           else if (time >= 10) div.html('0'+timeStr[0]+'.'+timeStr[1]);
+           else div.html('00.'+timeStr[0]);
+
+           if (time <= 0) $("#finishButton").click();
+           else if (time <= 50) div.css({'color':'red'})
+           else if (time <= 100) div.css({'color':'orange'});
+           else div.css({'color':'green'});
+           };
+           });
+    </script>
+
+    <div id="temp">
+    </div>
 
   </body>
 </html>

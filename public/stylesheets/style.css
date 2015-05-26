@@ -85,3 +85,9 @@ table {
   font-size: 2em;
   color: red;
 }
+
+#temp {
+  font-size: 3em;
+  color: green;
+  font-family: Menlo, Courier, monospace;
+}
