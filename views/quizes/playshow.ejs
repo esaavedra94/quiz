@@ -62,7 +62,7 @@
            else div.html('00.'+timeStr[0]);
          }
 
-         setInterval(corre, 100);
+         t = setInterval(corre, 100);
 
          function corre(){
            time -= 1;
@@ -71,9 +71,10 @@
 
            if (time >= 100) div.html(timeStr[0]+timeStr[1]+'.'+timeStr[2]);
            else if (time >= 10) div.html('0'+timeStr[0]+'.'+timeStr[1]);
-           else div.html('00.'+timeStr[0]);
+           else if (time >= 0) div.html('00.'+timeStr[0]);
+           else div.html('00.0');
 
-           if (time <= 0) $("#finishButton").click();
+           if (time <= 0) document.forms[2].submit();
            else if (time <= 50) div.css({'color':'red'})
            else if (time <= 100) div.css({'color':'orange'});
            else div.css({'color':'green'});

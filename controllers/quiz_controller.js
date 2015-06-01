@@ -105,7 +105,9 @@ exports.play = function(req, res) {
 
   if (req.query.stop) {
     req.session.user.mostrar = false;
-    res.render('quizes/playresults', {req:req, errors:[]});
+    models.Quiz.findAll().then(function(quizes){
+      res.render('quizes/playresults', {quizes:quizes, req:req, errors:[]});
+    });
   }
 
   else {
@@ -138,7 +140,7 @@ exports.play = function(req, res) {
         res.render('quizes/playshow', {quiz:quizes[req.session.user.played], quizes:quizes, req:req, errors:[]});
       }
       else {
-        res.render('quizes/playresults', {req:req, errors:[]});
+        res.render('quizes/playresults', {quizes:quizes, req:req, errors:[]});
       }
     });
   }

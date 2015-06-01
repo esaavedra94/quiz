@@ -5,16 +5,24 @@
     <title>Quiz Edav</title>
     </head>
   <body>
-    <h2>Has respondido <%= req.session.user.played %> preguntas,<br>
+    <h2>Has respondido <%= req.session.user.played %> de <%= quizes.length %> preguntas,<br>
       de las cuales has acertado <%= req.session.user.hits %> </h2>
       <br>
-    <% if ((req.session.user.hits > 0) && (req.session.user.hits >= (req.session.user.played / 2))) { %>
+    <% if ((req.session.user.hits > 0) && (req.session.user.played >= (quizes.length / 1.5)) && (req.session.user.hits >= (req.session.user.played / 2))) { %>
       <style>
       #summary {
         color: green;
       }
       </style>
       <strong id="summary">¡Muy bien, <%= req.session.user.username %>!</strong>
+    <% }
+    else if ((req.session.user.hits > 0) && (req.session.user.hits >= (req.session.user.played / 2))) { %>
+      <style>
+      #summary {
+        color: orange;
+      }
+      </style>
+      <strong id="summary">¡Bien, pero tienes que contestar más, <%= req.session.user.username %>!</strong>
     <% }
     else { %>
       <style>
